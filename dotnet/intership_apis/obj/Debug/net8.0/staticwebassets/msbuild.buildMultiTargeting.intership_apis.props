@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\intership_apis.props" />
+</Project>
