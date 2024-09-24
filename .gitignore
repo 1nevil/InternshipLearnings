@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/internship_consoleApp/obj/Debug/net8.0
+/internship_consoleApp/obj
+/internship_consoleApp/.vs
+/internship_consoleApp/bin/Debug/net8.0
+/internship_consoleApp/internship_consoleApp.csproj
+/internship_consoleApp/internship_consoleApp.sln
