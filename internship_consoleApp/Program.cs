@@ -1,48 +1,54 @@
-﻿using OfficeOpenXml;
-using OfficeOpenXml.Style;
+﻿using internship_consoleApp.models;
 
-//install nuget package - EPPlus
+List<Students> students = new List<Students>();
+students.Add(new Students { Id = 1, Name = "nevil", City = "surat" });
+students.Add(new Students { Id = 2, Name = "javal", City = "vadodra" });
+students.Add(new Students { Id = 3, Name = "raj", City = "delhi" });
+students.Add(new Students { Id = 4, Name = "jay", City = "hydrabad" });
+students.Add(new Students { Id = 5, Name = "jamin", City = "surat" });
 
-string filePath = @"parent_child_relationship.xlsx";
-
-using (var package = new ExcelPackage())
+foreach (var student in students)
 {
-    // Add a worksheet
-    var worksheet = package.Workbook.Worksheets.Add("Relationships");
-
-    // Set headers
-    worksheet.Cells[1, 1].Value = "Parent (i)";
-    worksheet.Cells[1, 2].Value = "Child (j)";
-    worksheet.Cells[1, 3].Value = "Child (k)";
-
-    int row = 2;
-
-    for (int i = 1; i < 10; i++)
-    {
-        for (int j = 11; j < 20; j++)
-        {
-            for (int k = 21; k <= 30; k++)
-            {
-                worksheet.Cells[row, 1].Value = i;
-                worksheet.Cells[row, 2].Value = j;
-                worksheet.Cells[row, 3].Value = k;
-
-                row++;
-            }
-        }
-    }
-
-    // Format the header row
-    using (var range = worksheet.Cells[1, 1, 1, 3])
-    {
-        range.Style.Font.Bold = true;
-        range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-        range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
-    }
-
-    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
-
-    File.WriteAllBytes(filePath, package.GetAsByteArray());
+    Console.WriteLine("StudentId : {0} Name : {1} City : {2}", student.Id, student.Name, student.City);
 }
 
-Console.WriteLine("Excel file created successfully at: " + filePath);
+//It is check reference so that is return false
+Students studentRaj = new Students { Id = 3, Name = "raj", City = "delhi" };
+if (students.Contains(studentRaj))
+{
+    Console.WriteLine("Found");
+}
+else
+{
+    Console.WriteLine("not Found");
+
+}
+
+//sort by name
+//var sortedStudents = students.OrderBy(s => s.Name);
+
+//OrderBy return IEnumerable - efficient 
+//IEnumerable<Students> sortedStudent = students.OrderBy(s => s.Name);
+
+//OrderBy return IEnumerable we need to convert into the list
+//List<Students> sortedStudents = students.OrderBy(s => s.Name).ToList();
+
+//bool isStudentExists = students.Exists(x => x.Name == "raj");
+bool isStudentExists = students.Exists(x => x.Name.StartsWith("r")); //return boolean
+
+if (isStudentExists)
+{
+    Console.WriteLine("Found");
+}
+
+
+//Find
+Students? stud = students.Find(s => s.Name == "raj");
+Console.WriteLine("StudentId : {0} Name : {1} City : {2}", stud?.Id, stud?.Name, stud?.City);
+
+//Find All
+List<Students>? studentsSurat = students.FindAll(s => s.City == "surat");
+foreach (var student in studentsSurat)
+{
+    Console.WriteLine("StudentId : {0} Name : {1} City : {2}", student.Id, student.Name, student.City);
+}
